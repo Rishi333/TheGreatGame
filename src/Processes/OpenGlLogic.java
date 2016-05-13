@@ -35,10 +35,10 @@ public class OpenGlLogic {
     public OpenGlLogic(Camera camera, final boolean[] kbState, CharacterCreator characterCreator, int[] spriteSize){
         this.windowWidth=Constants.windowWidth;
         this.windowHeight=Constants.windowHeight;
-        Foundation.Window windowClass=new Foundation.Window(windowWidth,windowHeight,kbState);
+        Foundation.Window windowClass=new Foundation.Window(windowWidth,windowHeight);
         this.window=windowClass.getWindow();
         this.gl=windowClass.getGl();
-        this.kbState=windowClass.getKbState();
+        this.kbState=kbState;
         this.camera=camera;
         this.spriteTex=characterCreator.getHero(0).getSprite();
         this.kbState=kbState;
@@ -61,6 +61,7 @@ public class OpenGlLogic {
         // Load the texture.
         background[0]= GlLibrary.glTexImageTGAFile(gl,"Media/Background/GreenPasture.tga",spriteSize);
         background[1]= GlLibrary.glTexImageTGAFile(gl,"Media/Background/RedPasture.tga",spriteSize);
+        background[2]=GlLibrary.glTexImageTGAFile(gl,"Media/Background/Start.tga",new int[]{100,100});
     }
 
     public boolean display() {
@@ -96,21 +97,24 @@ public class OpenGlLogic {
 
     public void drawBackground() {
         //optimization
-
-        for (int i = 0; i < tileHeight + 2; i++) {
-            for (int j = 0; j < tileWidth + 1; j++) {
-                GlLibrary.glDraw(background[currentLevel[i + camera.getY() / 32][j + camera.getX() / 32]], j * 32 - camera.getX() % 32, i * 32 - camera.getY() % 32, 32, 32, gl);
+            for (int i = 0; i < tileHeight + 2; i++) {
+                for (int j = 0; j < tileWidth + 2; j++) {
+                    int index = currentLevel[i + camera.getY() / Constants.TileSize][j + camera.getX() / Constants.TileSize];
+                    if (index != 0) {
+                        GlLibrary.glDraw(background[index], j * 32 - camera.getX() % 32, i * 32 - camera.getY() % 32, 32, 32, gl);
+                    }
+                }
             }
-        }
+
 
     }
     public void DisplayScore(){
         TextRenderer textRenderer = new TextRenderer(new Font("Verdana", Font.BOLD, 30));
-        textRenderer.beginRendering(900, 700);
+        textRenderer.beginRendering(windowWidth, windowHeight);
         textRenderer.setColor(Color.CYAN);
         textRenderer.setSmoothing(true);
 
-        Point pt = new Point(640, 600);
+        Point pt = new Point(windowWidth-250, 500);
         textRenderer.draw("Score "+Constants.score, (int) (pt.x), (int) (pt.y));
         textRenderer.draw("Top Score "+Constants.topScore, (int) (pt.x), (int) (pt.y-30));
 

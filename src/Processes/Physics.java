@@ -1,7 +1,6 @@
 package Processes;
 
 
-import Foundation.Character;
 import Foundation.Hero;
 import ManagersandCreators.CharacterCreator;
 import CoreConstants.Constants;
@@ -91,17 +90,6 @@ public class Physics implements Runnable {
                     }
                 }
             }
-            int y=(heroPos[1]);
-            int x=(heroPos[0]);
-            if(x>0&&y>0) {// should check outer box too
-                if (Maps.Location((int)x,(int)y) == 1) {
-                    System.out.println("Hero collision detected "+ new Random().nextInt());
-                    heroPos[0] = aiPositionTracker.getHeroPos()[0];
-                    heroPos[1] = aiPositionTracker.getHeroPos()[1];
-                }
-            }
-
-
 
 
             try {

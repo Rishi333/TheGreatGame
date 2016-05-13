@@ -41,7 +41,7 @@ public class OpenGlLogicTwoPlayer extends OpenGlLogic {
 
         for (int i = 0; i < tileHeight + 2; i++) {
             for (int j = 0; j < tileWidth/2 + 2; j++) {
-                GlLibrary.glDraw(background[currentLevel[i + camera.getY() / 32][j + camera.getX() / 32]], j * 32 - camera.getX() % 32, i * 32 - camera.getY() % 32, 32, 32, gl);
+                GlLibrary.glDraw(background[currentLevel[i + camera.getY() / Constants.TileSize][j + camera.getX() / Constants.TileSize]], j * 32 - camera.getX() % 32, i * 32 - camera.getY() % 32, 32, 32, gl);
             }
         }
         Camera camera=Constants.camera[1];

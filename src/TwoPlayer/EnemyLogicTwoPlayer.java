@@ -1,6 +1,6 @@
 package TwoPlayer;
 
-import Foundation.Character;
+import Processes.Character;
 import Foundation.Hero;
 import ManagersandCreators.CharacterCreator;
 import Processes.EnemyLogic;

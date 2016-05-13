@@ -26,10 +26,11 @@ public class Constants {
     public static int windowHeight=600;
 
     public static int TileSize=32;
-    public static int levelSize=40;
-    public static int[][] currentlevel= Maps.level2;
 
+    public static int[][] currentlevel= Maps.level2;
+    public static int levelSize=currentlevel[0].length;
     public static int enemyCount=60;
+    public static int enemySpeed=10;
 
     public static int score=0;
     public static int topScore=200;
@@ -37,7 +38,7 @@ public class Constants {
     public static boolean twoPlayer=false;// automatically set to false cause of cool java
 
 
-    public static Camera[] camera= new Camera[]{new Camera(0,0),null};
+    public static Camera[] camera= new Camera[2];
 
     // Size of the sprite.
     public static int[] spriteSize = new int[2];
@@ -45,6 +46,10 @@ public class Constants {
     //ManagersandCreators
     public static EventHandler eventHandler=new EventHandler();
     public static AudioManager audioManager=new AudioManager();
+
+    //Forces
+    public static int gravity=20;
+    public static boolean gravityState=false;
 
 
 }

@@ -1,6 +1,5 @@
 package Processes;
 
-import Foundation.Character;
 import Foundation.Hero;
 import ManagersandCreators.CharacterCreator;
 import CoreConstants.Constants;
@@ -62,7 +61,7 @@ public class EnemyLogic implements Runnable {
                 //Random Logic
                 //enemies[i].getPosition()[0]+=rand.nextInt()%5;
                 //enemies[i].getPosition()[1]+=rand.nextInt()%5;
-                int enemySpeed=2;
+                int enemySpeed=Constants.enemySpeed;
                 setHero(enemies[i]);
 
 

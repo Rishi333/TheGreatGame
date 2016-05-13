@@ -18,12 +18,14 @@ public class Game {
 
 
 
-    public static void main(String[] args) throws IOException {
+    public Game() {
 
 
 
         CharacterCreator characterCreator= new CharacterCreator();
-        AIPositionTracker aitracker=new AIPositionTracker(characterCreator, characterCreator.getHero(0));
+        Constants.camera[0]= new Camera(50,50);
+        //characterCreator.getHero(0).getPosition()[0],characterCreator.getHero(0).getPosition()[1]
+        AIPositionTracker aitracker=new AIPositionTracker(characterCreator.getHero(0));
         AIPositionTracker aitracker2= null;
         TimeController timeController=new TimeController();
         OpenGlLogic openGlLogic=null;
@@ -37,7 +39,7 @@ public class Game {
 
 
         }else{
-            aitracker2=new AIPositionTracker(characterCreator, characterCreator.getHero(1));
+            aitracker2=new AIPositionTracker(characterCreator.getHero(1));
             openGlLogic=new OpenGlLogicTwoPlayer(Constants.camera[0], Constants.kbState, characterCreator,Constants.spriteSize);
             heroLogic=new HeroLogicTwoPlayer(Constants.camera[0], Constants.kbState, characterCreator.getHero(0),timeController);
             Constants.camera[1]=new Camera(0,0);
@@ -49,8 +51,6 @@ public class Game {
             Thread physicsPlayer2= new Thread(physPlayerTwo);
             physicsPlayer2.start();
             enemyLogic=new EnemyLogicTwoPlayer(characterCreator, openGlLogic, characterCreator.getHero(0));
-            Thread aithread2= new Thread(aitracker2);
-            aithread2.start();
             //add enemies logic
             // check gl logic
         }
@@ -67,10 +67,12 @@ public class Game {
         //Starting Foundation.Camera and Foundation.Hero Logic Thread
         Thread logic=new Thread(heroLogic);
         logic.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //Starting AiTracker Position thread
-        Thread positionTracker= new Thread(aitracker);
-        positionTracker.start();
 
         //Event Handler
         Thread eventHandler= new Thread(Constants.eventHandler);
@@ -88,14 +90,14 @@ public class Game {
         Thread phys= new Thread(physics);
         phys.start();
 
-        //Starting music and testing events
-        Constants.eventHandler.addEvent(new Event(EventCode.AUDIO,new int[]{500},new String[]{"file.mp3"}));
-        Constants.eventHandler.addEvent(new Event(EventCode.MESSAGE,null,new String[]{"file.mp3"}));
+        //Starting Forces
+
+
 
         // The game loop
         while (!Constants.shouldExit) {
             long time= System.currentTimeMillis();
-            System.arraycopy(Constants.kbState, 0, Constants.kbPrevState, 0, Constants.kbState.length);
+
 
 
             //Gl Logic Stuff
@@ -110,7 +112,7 @@ public class Game {
             //DrawHero 2
             if(Constants.twoPlayer) {
                 Hero hero2 = characterCreator.getHero(1);
-                openGlLogic.glDrawSprite(hero2.getPosition()[0], hero2.getPosition()[1], 48, 48, timeController1.getCurrentFrame() + timeController1.getLeftRightModifier(), hero.getSprite());
+                openGlLogic.glDrawSprite(hero2.getPosition()[0], hero2.getPosition()[1], 64, 64, timeController1.getCurrentFrame() + timeController1.getLeftRightModifier(), hero2.getSprite());
                 hero2.drawBullets(openGlLogic,hero2);
             }
             //Draw Enemies

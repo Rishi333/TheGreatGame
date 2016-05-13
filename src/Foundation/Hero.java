@@ -1,7 +1,7 @@
 package Foundation;
 
 
-import Foundation.Character;
+import Processes.Character;
 
 /**
  * Created by rishi on 3/9/16.
@@ -21,8 +21,7 @@ public class Hero extends Character {
     public int attack2;
 
 
-
-    public Hero(int xLocation, int yLocation, int frameCount, int up, int down, int right, int left, int attack,int attack2){
+    public Hero(int xLocation, int yLocation, int frameCount, int up, int down, int right, int left, int attack, int attack2){
         super(xLocation,yLocation,frameCount);
         this.up=up;
         this.down=down;
@@ -30,6 +29,7 @@ public class Hero extends Character {
         this.left=left;
         this.attack=attack;
         this.attack2=attack2;
+
 
     }
     public int[] getFireBall() {

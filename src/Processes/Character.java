@@ -1,11 +1,18 @@
-package Foundation;
+package Processes;
 
+import CoreConstants.Constants;
+import Foundation.Force;
+import Foundation.Hero;
+import Processes.Gravity;
 import Processes.OpenGlLogic;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by rishi on 3/9/16.
  */
-public class Character {
+public class Character implements Runnable {
 
     // Position of the sprite.
     private int[] position;
@@ -15,16 +22,32 @@ public class Character {
 
     private boolean stuck=false;
 
-
-
+    private boolean grounded=false;
+    private int forceX;
+    private int forceY;
+    private LinkedList<Force> forces= new LinkedList<>();
 
 
     public Character(int xLocation, int yLocation, int FrameSize){
 
         position=new int[] {xLocation,yLocation};
         sprite=new int[FrameSize];
+        if(Constants.gravityState) {
+            this.addForce(new Gravity(this));
+            new Thread(this).start();
+        }
 
-
+    }
+    private void compileForces(){
+        forceX=0;
+        forceY=0;
+        for(Force force: forces){
+            forceX+=force.getX();
+            forceY+=force.getY();
+        }
+    }
+    public void addForce(Force force){
+        forces.add(force);
     }
 
     public int[] getPosition() {
@@ -62,6 +85,14 @@ public class Character {
             }
         }
     }
+    public boolean isGrounded() {
+        return grounded;
+    }
+
+    public void setGrounded(boolean grounded) {
+        this.grounded = grounded;
+    }
+
 
     public boolean getStuck() {
         return stuck;
@@ -69,5 +100,19 @@ public class Character {
 
     public void setStuck(boolean stuck) {
         this.stuck = stuck;
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            compileForces();
+            position[0]+=forceX;
+            position[1]+=forceY;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

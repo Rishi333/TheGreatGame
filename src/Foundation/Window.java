@@ -1,5 +1,6 @@
 package Foundation;
 
+import CoreConstants.Constants;
 import com.jogamp.nativewindow.WindowClosingProtocol;
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
@@ -15,11 +16,10 @@ import com.jogamp.opengl.GLProfile;
 public class Window {
     private GLWindow window;
     private GLProfile gl2Profile;
-    boolean[] kbState;
     GL2 gl;
 
-    public Window( int windowWidth, int windowHeight,final boolean[] kbState){
-        this.kbState=kbState;
+    public Window( int windowWidth, int windowHeight){
+
 
         try {
             // Make sure we have a recent version of OpenGL
@@ -37,17 +37,17 @@ public class Window {
         window.setTitle("Java Framework");
         window.setVisible(true);
         window.setDefaultCloseOperation(WindowClosingProtocol.WindowClosingMode.DISPOSE_ON_CLOSE);
-        window.addKeyListener(new KeyListener() {
 
+        window.addKeyListener(new KeyListener() {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                kbState[keyEvent.getKeyCode()] = true;
+                Constants.kbState[keyEvent.getKeyCode()] = true;
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-                kbState[keyEvent.getKeyCode()] = false;
+                Constants.kbState[keyEvent.getKeyCode()] = false;
             }
         });
 
@@ -70,9 +70,7 @@ public class Window {
         return gl2Profile;
     }
 
-    public boolean[] getKbState() {
-        return kbState;
-    }
+
 
     public GL2 getGl() {
         return gl;

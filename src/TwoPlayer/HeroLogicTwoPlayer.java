@@ -19,14 +19,14 @@ public class HeroLogicTwoPlayer extends HeroLogic {
         //Need to fix to allow not magic constants-> Use variable for pixels
         int speed=5;
 
-        if (HeroPos[0] - 300 < camera.getX() && camera.getX() >= 0) {
+        if (HeroPos[0] - 300 < camera.getX() && camera.getX() > 0) {
             camera.setX(camera.getX() - speed);
-        } else if (HeroPos[0] - 340 > camera.getX() && camera.getX() <= Constants.TileSize * Constants.levelSize - (windowWidth/2 + 20)) {
+        } else if (HeroPos[0] - 340 > camera.getX() && camera.getX() <= (Constants.TileSize * Constants.levelSize) - (windowWidth/2 + 75)) {
             camera.setX(camera.getX() + speed);
         }
-        if (HeroPos[1] - 220 < camera.getY() && camera.getY() >= 0) {
+        if (HeroPos[1] - 220 < camera.getY() && camera.getY() > 0) {
             camera.setY(camera.getY() - speed);
-        } else if (HeroPos[1] - 260 > camera.getY() && camera.getY() <= 32 * 40 - (windowHeight + 20)) {
+        } else if (HeroPos[1] - 260 > camera.getY() && camera.getY() <= (Constants.TileSize * Constants.levelSize) - (windowHeight + 75)) {
             camera.setY(camera.getY() + speed);
         }
 
